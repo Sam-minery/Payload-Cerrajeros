@@ -23,7 +23,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('min-w-[9.375rem] w-full h-[100px]', className)}
-      src="/media/logo-apertura express-600x280.png"
+      src="/media/Logo-AperturasExpress-300x200.png"
     />
   )
 }
