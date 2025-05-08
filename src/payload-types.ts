@@ -191,7 +191,15 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | SeccionComentariosBlock
+    | SeccionServiciosBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -733,6 +741,87 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionComentariosBlock".
+ */
+export interface SeccionComentariosBlock {
+  comments?:
+    | {
+        userName: string;
+        comment?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        userIcon: number | Media;
+        puntuacion: number;
+        id?: string | null;
+      }[]
+    | null;
+  starIcon: number | Media;
+  starIconEmpt: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionComentarios';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionServiciosBlock".
+ */
+export interface SeccionServiciosBlock {
+  title: string;
+  contentSection?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  servicios?:
+    | {
+        titleServices: string;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionServicios';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1021,6 +1110,8 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
+        seccionServicios?: T | SeccionServiciosBlockSelect<T>;
       };
   meta?:
     | T
@@ -1117,6 +1208,43 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionComentariosBlock_select".
+ */
+export interface SeccionComentariosBlockSelect<T extends boolean = true> {
+  comments?:
+    | T
+    | {
+        userName?: T;
+        comment?: T;
+        userIcon?: T;
+        puntuacion?: T;
+        id?: T;
+      };
+  starIcon?: T;
+  starIconEmpt?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionServiciosBlock_select".
+ */
+export interface SeccionServiciosBlockSelect<T extends boolean = true> {
+  title?: T;
+  contentSection?: T;
+  servicios?:
+    | T
+    | {
+        titleServices?: T;
+        content?: T;
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
