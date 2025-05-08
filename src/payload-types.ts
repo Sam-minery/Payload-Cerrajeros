@@ -199,6 +199,13 @@ export interface Page {
     | FormBlock
     | SeccionComentariosBlock
     | SeccionServiciosBlock
+    | {
+        paginasRelacionadas: (number | Page)[];
+        nombreSeccionProvincias?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'seccionProvincias';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1113,6 +1120,14 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
         seccionServicios?: T | SeccionServiciosBlockSelect<T>;
+        seccionProvincias?:
+          | T
+          | {
+              paginasRelacionadas?: T;
+              nombreSeccionProvincias?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T

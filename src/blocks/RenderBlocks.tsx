@@ -9,7 +9,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { SeccionComentariosBlock } from '@/blocks/SeccionComentarios/Component'
 import { SeccionServiciosBlock } from '@/blocks/SeccionServicios/Component'
-
+import { SeccionProvinciasBlock } from '@/blocks/SeccionProvincias/Component'
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
@@ -18,6 +18,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   seccionComentarios: SeccionComentariosBlock,
   seccionServicios: SeccionServiciosBlock,
+  seccionProvincias: SeccionProvinciasBlock,
 }
 
 export const RenderBlocks: React.FC<{
