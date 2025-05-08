@@ -27,6 +27,12 @@ export const Archive: Block = {
       label: 'Intro Content',
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Imagen',
+    },
+    {
       name: 'populateBy',
       type: 'select',
       defaultValue: 'collection',

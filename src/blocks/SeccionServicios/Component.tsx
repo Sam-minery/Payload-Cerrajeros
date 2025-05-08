@@ -17,12 +17,12 @@ export function SeccionServiciosBlock({ title, contentSection, servicios, classN
         return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
     };
     return (
-        <section className={cn('py-16 bg-gray-400 flex justify-center items-center', {
+        <section className={cn('py-16 bg-gray-300 flex justify-center items-center rounded-xl border-2 border-black', {
             'container': enableGutter
         }, className)}>
             <div className="w-full max-w-7xl mx-auto">
                 {title && (
-                    <h2 className="text-4xl font-bold text-white text-center mb-6">{title}</h2>
+                    <h2 className="text-4xl font-bold text-black text-center mb-6">{title}</h2>
                 )}
 
                 {contentSection && (
@@ -31,15 +31,15 @@ export function SeccionServiciosBlock({ title, contentSection, servicios, classN
                             data={contentSection} 
                             enableGutter={false}
                             enableProse={true}
-                            className="[&_strong]:font-bold [&_strong]:text-white [&_p]:text-white text-xl" 
+                            className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black text-xl" 
                         />
                     </div>
                 )}
 
                 <div className={cn('grid gap-8 place-items-center', getGridCols())}>
                     {servicios?.map((servicio, index) => (
-                        <div key={index} className="flex flex-col items-center text-center bg-black/10 p-3 rounded-lg w-full h-[200px] transition-all duration-300 hover:bg-black/20 hover:scale-105 hover:shadow-lg cursor-pointer">
-                            <div className="flex items-center gap-4 mb-6">
+                        <div key={index} className="flex flex-col items-center text-center bg-white p-3 rounded-xl w-full h-[200px]">
+                            <div className="flex items-center gap-2 mb-6">
                                 {servicio.image && (
                                     <div className="w-16 h-16 relative">
                                         <Media
@@ -49,17 +49,17 @@ export function SeccionServiciosBlock({ title, contentSection, servicios, classN
                                     </div>
                                 )}
                                 {servicio.titleServices && (
-                                    <h3 className="text-xl font-bold text-white">{servicio.titleServices}</h3>
+                                    <h3 className="text-lg font-bold text-black">{servicio.titleServices}</h3>
                                 )}
                             </div>
 
                             {servicio.content && (
-                                <div className="mb-2 flex-grow overflow-y-auto">
+                                <div className="mb-2 flex-grow overflow-hidden">
                                     <RichText 
                                         data={servicio.content} 
                                         enableGutter={false}
                                         enableProse={true}
-                                        className="[&_strong]:font-bold [&_strong]:text-white [&_p]:text-white" 
+                                        className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black" 
                                     />
                                 </div>
                             )}

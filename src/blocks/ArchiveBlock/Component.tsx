@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import RichText from '@/components/RichText'
+import { Media } from '@/components/Media'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 
@@ -12,7 +13,7 @@ export const ArchiveBlock: React.FC<
     id?: string
   }
 > = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs, image } = props
 
   const limit = limitFromProps || 3
 
@@ -53,13 +54,26 @@ export const ArchiveBlock: React.FC<
   }
 
   return (
-    <div className="my-16 max-w-7xl mx-auto bg-gray-500/20 rounded-2xl p-4" id={`block-${id}`}>
-      {introContent && (
-        <div className="container mb-16">
-          <RichText className="text-center" data={introContent} enableGutter={false} />
+    <div 
+      className="my-16 max-w-7xl mx-auto rounded-2xl p-4 relative overflow-hidden" 
+      id={`block-${id}`}
+    >
+      {image && (
+        <div className="absolute inset-0 z-0">
+          <Media 
+            resource={image} 
+            className="w-full h-full object-cover opacity-50"
+          />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      <div className="relative z-10">
+        {introContent && (
+          <div className="container mb-16 bg-white/40 rounded-2xl p-4">
+            <RichText className="text-center" data={introContent} enableGutter={false} />
+          </div>
+        )}
+        <CollectionArchive posts={posts} />
+      </div>
     </div>
   )
 }

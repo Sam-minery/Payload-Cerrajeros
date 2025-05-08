@@ -43,8 +43,8 @@ export const SeccionServicios: Block = {
     slug: 'seccionServicios',
     interfaceName: 'SeccionServiciosBlock',
     labels: {
-        plural: 'Seccion Servicios',
-        singular: 'Seccion Servicio'
+        plural: 'Seccion Beneficios',
+        singular: 'Seccion Beneficio'
     },
     fields: [
         {

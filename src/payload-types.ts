@@ -525,6 +525,7 @@ export interface ArchiveBlock {
     };
     [k: string]: unknown;
   } | null;
+  image?: (number | null) | Media;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'posts' | null;
   categories?: (number | Category)[] | null;
@@ -1192,6 +1193,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface ArchiveBlockSelect<T extends boolean = true> {
   introContent?: T;
+  image?: T;
   populateBy?: T;
   relationTo?: T;
   categories?: T;

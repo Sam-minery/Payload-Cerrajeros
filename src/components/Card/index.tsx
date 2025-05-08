@@ -32,7 +32,7 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'relative border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'relative border border-border rounded-xl overflow-hidden bg-card hover:cursor-pointer hover:scale-105 transition-all duration-300 bg-white/80',
         className,
       )}
       ref={card.ref}
@@ -63,7 +63,7 @@ export const Card: React.FC<{
 
                     return (
                       <Fragment key={index}>
-                        <span className="text-muted-foreground bg-card/80 px-2 py-1 rounded">
+                        <span className="text-muted-foreground text-xs px-2 py-1 rounded">
                           {categoryTitle}
                           {!isLast && <Fragment>, &nbsp;</Fragment>}
                         </span>
