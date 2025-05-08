@@ -85,6 +85,36 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'media',
             },
             {
+              name: 'icon',
+              type: 'select',
+              admin: {
+                description: 'Selecciona un icono para este post',
+                isClearable: true,
+              },
+              options: [
+                {
+                  label: '🔒 Candado',
+                  value: 'lock',
+                },
+                {
+                  label: '🚪 Puerta Abierta',
+                  value: 'door',
+                },
+                {
+                  label: '🛡️ Escudo Seguro',
+                  value: 'shield',
+                },
+                {
+                  label: '🚗 Coche',
+                  value: 'car',
+                },
+                {
+                  label: '🏦 Caja Fuerte',
+                  value: 'safe',
+                },
+              ],
+            },
+            {
               name: 'content',
               type: 'richText',
               editor: lexicalEditor({

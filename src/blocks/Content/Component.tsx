@@ -17,26 +17,33 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   }
 
   return (
-    <div className="container my-16">
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-16">
-        {columns &&
-          columns.length > 0 &&
-          columns.map((col, index) => {
-            const { enableLink, link, richText, size } = col
+    <div className="container my-16 text-center">
+      <div className="grid auto-rows-auto gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {columns &&
+            columns.length > 0 &&
+            columns.map((col, index) => {
+              const { enableLink, link, richText, size } = col
 
-            return (
-              <div
-                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
-                  'md:col-span-2': size !== 'full',
-                })}
-                key={index}
-              >
-                {richText && <RichText data={richText} enableGutter={false} />}
-
-                {enableLink && <CMSLink {...link} />}
-              </div>
-            )
-          })}
+              return (
+                <div
+                  className={cn(
+                    'bg-white p-6 rounded-lg shadow-xl',
+                    {
+                      'md:col-span-2 lg:col-span-4': size === 'full',
+                      'md:col-span-1 lg:col-span-2': size === 'half',
+                      'md:col-span-1': size === 'oneThird',
+                      'md:col-span-2 lg:col-span-3': size === 'twoThirds',
+                    }
+                  )}
+                  key={index}
+                >
+                  {richText && <RichText data={richText} enableGutter={false} />}
+                  {enableLink && <CMSLink {...link} className="mt-4 inline-block" />}
+                </div>
+              )
+            })}
+        </div>
       </div>
     </div>
   )

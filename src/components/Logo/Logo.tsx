@@ -16,14 +16,14 @@ export const Logo = (props: Props) => {
   return (
     /* eslint-disable @next/next/no-img-element */
     <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
+      alt="Apertura Express Logo"
+      width={600}
+      height={280}
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
+      className={clsx('min-w-[9.375rem] w-full h-[100px]', className)}
+      src="/media/logo-apertura express-600x280.png"
     />
   )
 }

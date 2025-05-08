@@ -101,3 +101,56 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+.rotating-border-container {
+  position: relative;
+  max-width: 64rem;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.rotating-border-content {
+  background-color: white;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes rotate {
+  from {
+    --gradient-angle: 0deg;
+  }
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+.rotating-border::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  z-index: 1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent,
+    transparent,
+    rgba(255, 0, 0, 0.4) 45%,
+    rgba(255, 0, 0, 0.6) 50%,
+    rgba(255, 0, 0, 0.4) 55%,
+    transparent,
+    transparent
+  );
+  animation: rotate 3s linear infinite;
+  will-change: transform;
+  --gradient-angle: 0deg;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
