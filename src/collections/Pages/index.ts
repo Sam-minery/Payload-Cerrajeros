@@ -15,6 +15,7 @@ import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { SeccionComentarios } from '@/blocks/SeccionComentarios/config'
 import { SeccionServicios } from '@/blocks/SeccionServicios/config'
 import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
+import { SeccionInformativo } from '@/blocks/SeccionInformativo/config'
 
 import {
   MetaDescriptionField,
@@ -78,7 +79,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo],
               required: true,
               admin: {
                 initCollapsed: true,

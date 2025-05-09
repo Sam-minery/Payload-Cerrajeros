@@ -200,12 +200,13 @@ export interface Page {
     | SeccionComentariosBlock
     | SeccionServiciosBlock
     | {
-        paginasRelacionadas: (number | Page)[];
         nombreSeccionProvincias?: string | null;
+        paginasRelacionadas: (number | Page)[];
         id?: string | null;
         blockName?: string | null;
         blockType: 'seccionProvincias';
       }
+    | SeccionInformativoBlock
   )[];
   meta?: {
     title?: string | null;
@@ -830,6 +831,32 @@ export interface SeccionServiciosBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionInformativoBlock".
+ */
+export interface SeccionInformativoBlock {
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionInformativo';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1123,11 +1150,12 @@ export interface PagesSelect<T extends boolean = true> {
         seccionProvincias?:
           | T
           | {
-              paginasRelacionadas?: T;
               nombreSeccionProvincias?: T;
+              paginasRelacionadas?: T;
               id?: T;
               blockName?: T;
             };
+        seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
       };
   meta?:
     | T
@@ -1262,6 +1290,17 @@ export interface SeccionServiciosBlockSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionInformativoBlock_select".
+ */
+export interface SeccionInformativoBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  image?: T;
   id?: T;
   blockName?: T;
 }

@@ -8,6 +8,11 @@ export const SeccionProvincias: Block = {
   },
   fields: [
     {
+      name: 'nombreSeccionProvincias',
+      type: 'text',
+      label: 'Nombre Seccion provincias',
+    },
+    {
       name: 'paginasRelacionadas',
       type: 'relationship',
       relationTo: 'pages',
@@ -15,10 +20,5 @@ export const SeccionProvincias: Block = {
       label: 'Páginas Relacionadas',
       required: true,
     },
-    {
-        name: 'nombreSeccionProvincias',
-        type: 'text',
-        label: 'Nombre Seccion provincias',
-    }
   ],
 };
