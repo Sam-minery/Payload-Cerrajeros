@@ -62,7 +62,8 @@ export const ArchiveBlock: React.FC<
         <div className="absolute inset-0 z-0">
           <Media 
             resource={image} 
-            className="w-full h-full object-cover opacity-50"
+            className="w-auto h-full opacity-50 object-contain md:w-full md:object-cover"
+            fill
           />
         </div>
       )}

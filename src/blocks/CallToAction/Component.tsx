@@ -14,7 +14,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
             <div className="max-w-[48rem] mx-auto text-center">
               {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
             </div>
-            <div className="flex flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               {(links || []).map(({ link }, i) => {
                 const bgColorClass = i === 0 ? 'bg-red-500 hover:bg-red-600' : 
                                    i === 1 ? 'bg-green-500 hover:bg-green-600' :
@@ -23,7 +23,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
                 return <CMSLink 
                   key={i} 
                   size="lg" 
-                  className={bgColorClass}
+                  className={`w-full md:w-auto ${bgColorClass}`}
                   {...link} 
                 />
               })}
