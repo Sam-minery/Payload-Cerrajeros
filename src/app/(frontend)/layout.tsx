@@ -15,7 +15,7 @@ import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
-
+import { Background } from '@/components/Background'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
@@ -28,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
+          <Background>
           <AdminBar
             adminBarProps={{
               preview: isEnabled,
@@ -35,7 +36,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
 
           <Header />
-          {children}
+            {children}
+          </Background>
           <Footer />
         </Providers>
       </body>

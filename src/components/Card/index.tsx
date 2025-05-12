@@ -6,9 +6,16 @@ import React, { Fragment } from 'react'
 
 import type { Post } from '@/payload-types'
 
-import { Media } from '@/components/Media'
 
 export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'icon'>
+
+const iconMap = {
+  lock: '/media/icono-candado.png',
+  door: '/media/Icono-puerta.png',
+  shield: '/media/Icono-escudo.png',
+  car: '/media/Icono-coche.png',
+  safe: '/media/Icono-caja-fuerte.png',
+}
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -32,23 +39,20 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'relative border border-border rounded-xl overflow-hidden bg-card hover:cursor-pointer hover:scale-105 transition-all duration-300 bg-white/80',
+        'relative border border-border rounded-xl overflow-hidden bg-card hover:cursor-pointer hover:scale-105 transition-all duration-300 bg-white/85 hover:bg-white',
         className,
       )}
       ref={card.ref}
     >
-      <div className="relative w-full">
-        {!metaImage && <div className="justify-center items-center flex h-full">.</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
-      </div>
+
       <div className="p-4">
         {icon && (
-          <div className="text-center text-2xl mb-2 text-red-600">
-            {icon === 'lock' && '🔒'}
-            {icon === 'door' && '🚪'}
-            {icon === 'shield' && '🛡️'}
-            {icon === 'car' && '🚗'}
-            {icon === 'safe' && '🏦'}
+          <div className="text-center mb-2">
+            <img 
+              src={iconMap[icon as keyof typeof iconMap]} 
+              alt={`Icono de ${icon}`}
+              className="w-12 h-12 mx-auto"
+            />
           </div>
         )}
         {showCategories && hasCategories && (

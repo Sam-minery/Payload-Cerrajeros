@@ -62,14 +62,14 @@ export const ArchiveBlock: React.FC<
         <div className="absolute inset-0 z-0">
           <Media 
             resource={image} 
-            className="w-auto h-full opacity-50 object-contain md:w-full md:object-cover"
+            className="w-auto h-full opacity-60 object-contain md:w-full md:object-cover"
             fill
           />
         </div>
       )}
       <div className="relative z-10">
         {introContent && (
-          <div className="container mb-16 bg-white/40 rounded-2xl p-4">
+          <div className="container mb-16 bg-white/85 rounded-2xl p-4">
             <RichText className="text-center" data={introContent} enableGutter={false} />
           </div>
         )}
