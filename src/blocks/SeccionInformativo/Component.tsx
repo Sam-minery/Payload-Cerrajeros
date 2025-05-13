@@ -1,7 +1,10 @@
+"use client";
+
 import type { SeccionInformativoBlock } from "@/payload-types";
 import { cn } from '@/utilities/ui';
 import RichText from '@/components/RichText';
 import { Media } from '@/components/Media';
+import { useEffect, useRef } from 'react';
 
 type Props = SeccionInformativoBlock & {
     className?: string;
@@ -9,17 +12,44 @@ type Props = SeccionInformativoBlock & {
 }
 
 export function SeccionInformativoBlock({ title, content, image, className, enableGutter = true }: Props) {
+    const contentRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target === contentRef.current) {
+                        entry.target.classList.add('animate-fade-in-left');
+                    } else if (entry.target === imageRef.current) {
+                        entry.target.classList.add('animate-fade-in-right');
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        if (contentRef.current) observer.observe(contentRef.current);
+        if (imageRef.current) observer.observe(imageRef.current);
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <section className={cn('py-16 bg-gray-100 flex justify-center items-center rounded-xl', {
             '': enableGutter
         }, className)}>
             <div className="w-full max-w-7xl mx-auto">
                 {title && (
-                    <h2 className="text-4xl font-bold text-black text-center mb-6">{title}</h2>
+                    <h2 className="text-4xl font-bold text-black text-center mb-6">
+                        {title}
+                    </h2>
                 )}
 
                 <div className="flex flex-col md:flex-row gap-8 items-center">
-                    <div className="w-full md:w-1/2">
+                    <div 
+                        ref={contentRef}
+                        className="w-full md:w-1/2 opacity-0"
+                    >
                         {content && (
                             <div className="mb-6">
                                 <RichText 
@@ -33,7 +63,10 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
                     </div>
 
                     {image && (
-                        <div className="w-full md:w-1/2">
+                        <div 
+                            ref={imageRef}
+                            className="w-full md:w-1/2 opacity-0"
+                        >
                             <div className="relative aspect-video w-full">
                                 <Media
                                     resource={image}

@@ -771,12 +771,12 @@ export interface SeccionComentariosBlock {
           };
           [k: string]: unknown;
         } | null;
-        userIcon: number | Media;
+        userIcon?: (number | null) | Media;
         puntuacion: number;
         id?: string | null;
       }[]
     | null;
-  starIcon: number | Media;
+  starIcon?: (number | null) | Media;
   starIconEmpt: number | Media;
   id?: string | null;
   blockName?: string | null;

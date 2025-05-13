@@ -34,7 +34,6 @@ const comentariosFields: Field[] = [
         name: 'userIcon',
         type: 'upload',
         relationTo: 'media',
-        required: true,
         label: 'Icono de Usuario',
     },
     {
@@ -70,7 +69,7 @@ fields: [
         name: 'starIcon',
         type: 'upload',
         relationTo: 'media',
-        required: true,
+        required: false,
         label: 'Icono de estrella',
     },
     {

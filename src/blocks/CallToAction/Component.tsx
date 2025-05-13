@@ -8,7 +8,7 @@ import { CMSLink } from '@/components/Link'
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
     <div className="container mx-auto px-4 md:px-8 lg:px-16">
-      <div className="rotating-border-container">
+      <div className="rotating-border-container animate-pulse-scale">
         <div className="rotating-border">
           <div className="rotating-border-content bg-card rounded border-border border p-4 flex flex-col gap-8">
             <div className="max-w-[48rem] mx-auto text-center">

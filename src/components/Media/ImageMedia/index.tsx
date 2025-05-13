@@ -47,6 +47,11 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     src = `${getClientSideURL()}${url}?${cacheTag}`
   }
 
+  // Si no hay src después de intentar obtenerlo del resource, no renderizamos nada
+  if (!src) {
+    return null
+  }
+
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
@@ -69,7 +74,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         quality={100}
         loading={loading}
         sizes={sizes}
-        src={src}
+        src={src || null}
         width={!fill ? width : undefined}
       />
     </picture>
