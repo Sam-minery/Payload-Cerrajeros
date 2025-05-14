@@ -17,7 +17,7 @@ export function SeccionServiciosBlock({ title, contentSection, servicios, classN
         return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
     };
     return (
-        <section className={cn('py-16 bg-gray-300 flex justify-center items-center rounded-xl border-2 border-black', {
+        <section className={cn('py-16 bg-gray-100 flex justify-center items-center rounded-xl border-2 border-gray-200', {
             'container': enableGutter
         }, className)}>
             <div className="w-full max-w-7xl mx-auto">

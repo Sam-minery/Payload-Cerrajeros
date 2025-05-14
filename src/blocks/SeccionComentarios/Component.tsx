@@ -14,12 +14,18 @@ type Props = {
   comments: Comment[]
   starIcon: Media
   starIconEmpt: Media
+  title?: any
 }
 
-export const SeccionComentariosBlock: React.FC<Props> = ({ comments, starIcon, starIconEmpt }) => {
+export const SeccionComentariosBlock: React.FC<Props> = ({ comments, starIcon, starIconEmpt, title }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="w-full px-4 md:px-6 lg:px-8 xl:px-10 py-5 md:py-8 xl:py-10">
+        {title && (
+          <div className="mb-8 text-center">
+            <RichText data={title} />
+          </div>
+        )}
         <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory">
           {comments.map((comment, index) => (
             <div

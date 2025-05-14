@@ -5,6 +5,7 @@ import {
     InlineToolbarFeature,
     ParagraphFeature,
     lexicalEditor,
+    HeadingFeature,
 } from '@payloadcms/richtext-lexical'
 
 const comentariosFields: Field[] = [
@@ -43,41 +44,61 @@ const comentariosFields: Field[] = [
         max: 5,
         required: true,
         label: 'puntuacion',
-}
+    }
 ]
 
 export const SeccionComentarios: Block = {
-slug: 'seccionComentarios',
-interfaceName: 'SeccionComentariosBlock',
-labels: {
-    plural: 'Seccion Comentario',
-    singular: 'Seccion Comentarios'
-},
-fields: [
-    {
-        name: 'comments',
-        type: 'array',
-        maxRows: 6,
-        minRows: 1,
-        label: 'comentarios',
-        admin: {
-            initCollapsed: true,
+    slug: 'seccionComentarios',
+    interfaceName: 'SeccionComentariosBlock',
+    labels: {
+        plural: 'Seccion Comentario',
+        singular: 'Seccion Comentarios'
+    },
+    fields: [
+        {
+            name: 'title',
+            type: 'richText',
+            required: false,
+            label: 'Título de la sección',
+            editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                    return [
+                        ...rootFeatures,
+                        ParagraphFeature(),
+                        BoldFeature(),
+                        HeadingFeature({
+                            enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
+                        }),
+                        FixedToolbarFeature(),
+                        InlineToolbarFeature(),
+                    ]
+                },
+            }),
         },
-        fields: comentariosFields,
-    },
-    {
-        name: 'starIcon',
-        type: 'upload',
-        relationTo: 'media',
-        required: false,
-        label: 'Icono de estrella',
-    },
-    {
-        name: 'starIconEmpt',
-        type: 'upload',
-        relationTo: 'media',
-        required: true,
-        label: 'Icono de estrella vacia',
-    }
-]
+        {
+            name: 'comments',
+            type: 'array',
+            maxRows: 6,
+            minRows: 1,
+            label: 'comentarios',
+            admin: {
+                initCollapsed: true,
+            },
+            fields: comentariosFields,
+        },
+        {
+            name: 'starIcon',
+            type: 'upload',
+            relationTo: 'media',
+            required: false,
+            label: 'Icono de estrella',
+        },
+        {
+            name: 'starIconEmpt',
+            type: 'upload',
+            relationTo: 'media',
+            required: true,
+            label: 'Icono de estrella vacia',
+        }
+    ]
 }

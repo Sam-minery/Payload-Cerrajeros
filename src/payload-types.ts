@@ -753,6 +753,21 @@ export interface Form {
  * via the `definition` "SeccionComentariosBlock".
  */
 export interface SeccionComentariosBlock {
+  title?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   comments?:
     | {
         userName: string;
@@ -1261,6 +1276,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "SeccionComentariosBlock_select".
  */
 export interface SeccionComentariosBlockSelect<T extends boolean = true> {
+  title?: T;
   comments?:
     | T
     | {
