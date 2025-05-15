@@ -16,6 +16,7 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { EmergencyBanner } from './Emergency-banner/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -69,10 +70,16 @@ export default buildConfig({
     Posts, 
     Media, 
     Categories, 
-    Users
-   ],
+    Users,
+  ],
+  blocks: [
+  ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [
+    Header, 
+    Footer,
+    EmergencyBanner
+  ],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

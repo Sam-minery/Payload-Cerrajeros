@@ -4,7 +4,7 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from '@/utilities/ui'
 import NextImage from 'next/image'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import type { Props as MediaProps } from '../types'
 
@@ -30,25 +30,27 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     loading: loadingFromProps,
   } = props
 
-  let width: number | undefined
-  let height: number | undefined
-  let alt = altFromProps
-  let src: StaticImageData | string = srcFromProps || ''
+  const imageData = useMemo(() => {
+    let width: number | undefined
+    let height: number | undefined
+    let alt = altFromProps
+    let src: string | StaticImageData = srcFromProps || ''
 
-  if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    if (!src && resource && typeof resource === 'object') {
+      const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
 
-    width = fullWidth!
-    height = fullHeight!
-    alt = altFromResource || ''
+      width = fullWidth!
+      height = fullHeight!
+      alt = altFromResource || ''
 
-    const cacheTag = resource.updatedAt
+      // Asegurarnos de que la URL sea consistente
+      src = url ? (url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_API_URL || ''}${url}`) : ''
+    }
 
-    src = `${getClientSideURL()}${url}?${cacheTag}`
-  }
+    return { width, height, alt, src }
+  }, [altFromProps, resource, srcFromProps])
 
-  // Si no hay src después de intentar obtenerlo del resource, no renderizamos nada
-  if (!src) {
+  if (!imageData.src) {
     return null
   }
 
@@ -64,18 +66,18 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   return (
     <picture className={cn(pictureClassName)}>
       <NextImage
-        alt={alt || ''}
+        alt={imageData.alt || ''}
         className={cn(imgClassName)}
         fill={fill}
-        height={!fill ? height : undefined}
+        height={!fill ? imageData.height : undefined}
         placeholder="blur"
         blurDataURL={placeholderBlur}
         priority={priority}
         quality={100}
         loading={loading}
         sizes={sizes}
-        src={src || null}
-        width={!fill ? width : undefined}
+        src={imageData.src}
+        width={!fill ? imageData.width : undefined}
       />
     </picture>
   )

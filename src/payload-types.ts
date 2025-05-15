@@ -103,10 +103,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'emergency-banner': EmergencyBanner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'emergency-banner': EmergencyBannerSelect<false> | EmergencyBannerSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1795,6 +1797,18 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emergency-banner".
+ */
+export interface EmergencyBanner {
+  id: number;
+  banner: string;
+  backgroundColor?: ('red' | 'yellow' | 'orange') | null;
+  isActive?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1835,6 +1849,18 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emergency-banner_select".
+ */
+export interface EmergencyBannerSelect<T extends boolean = true> {
+  banner?: T;
+  backgroundColor?: T;
+  isActive?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

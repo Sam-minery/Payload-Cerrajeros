@@ -6,7 +6,7 @@ import RichText from '@/components/RichText';
 import { Media } from '@/components/Media';
 import { useEffect, useRef } from 'react';
 
-type Props = SeccionInformativoBlock & {
+export type Props = SeccionInformativoBlock & {
     className?: string;
     enableGutter?: boolean;
 }
@@ -72,6 +72,7 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
                                     resource={image}
                                     imgClassName="object-cover rounded-xl"
                                     fill
+                                    priority={true}
                                 />
                             </div>
                         </div>

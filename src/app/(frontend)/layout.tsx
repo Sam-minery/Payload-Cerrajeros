@@ -12,10 +12,12 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { EmergencyBanner } from '@/Emergency-banner/Component'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import { Background } from '@/components/Background'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
@@ -29,13 +31,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <Providers>
           <Background>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
-
-          <Header />
+            <AdminBar
+              adminBarProps={{
+                preview: isEnabled,
+              }}
+            />
+            <EmergencyBanner />
+            <Header />
             {children}
           </Background>
           <Footer />
