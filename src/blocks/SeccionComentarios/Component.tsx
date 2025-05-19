@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useRef, useState } from 'react'
 import { Media } from '@/payload-types'
 import { Media as MediaComponent } from '@/components/Media'
 import RichText from '@/components/RichText'
@@ -18,6 +20,28 @@ type Props = {
 }
 
 export const SeccionComentariosBlock: React.FC<Props> = ({ comments, starIcon, starIconEmpt, title }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const container = scrollContainerRef.current;
+      if (container?.children?.[0]) {
+        const nextIndex = (currentIndex + 1) % comments.length;
+        setCurrentIndex(nextIndex);
+        
+        const cardWidth = container.children[0].clientWidth;
+        container.style.transition = 'all 1s ease';
+        container.scrollTo({
+          left: nextIndex * (cardWidth + 16),
+          behavior: 'smooth'
+        });
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, comments.length]);
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-full px-4 md:px-6 lg:px-8 xl:px-10 py-5 md:py-8 xl:py-10">
@@ -26,11 +50,14 @@ export const SeccionComentariosBlock: React.FC<Props> = ({ comments, starIcon, s
             <RichText data={title} />
           </div>
         )}
-        <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory">
+        <div 
+          ref={scrollContainerRef}
+          className="flex overflow-x-hidden gap-4 pb-4 scroll-smooth"
+        >
           {comments.map((comment, index) => (
             <div
               key={index}
-              className="flex-none snap-center p-4 md:p-5 bg-white rounded shadow-md h-auto min-h-[320px] flex flex-col
+              className="flex-none p-4 md:p-5 bg-white rounded shadow-md h-auto min-h-[320px] flex flex-col
                 w-[calc(100%-2rem)]
                 md:w-[calc(50%-1rem)]
                 lg:w-[calc(33.33%-1rem)]

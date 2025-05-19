@@ -55,7 +55,7 @@ export const ArchiveBlock: React.FC<
 
   return (
     <div 
-      className="my-16 max-w-7xl mx-auto rounded-2xl p-4 relative overflow-hidden" 
+      className="my-16 max-w-7xl mx-auto rounded-2xl p-4 relative overflow-hidden bg-gray-100" 
       id={`block-${id}`}
     >
       {image && (
@@ -69,7 +69,7 @@ export const ArchiveBlock: React.FC<
       )}
       <div className="relative z-10">
         {introContent && (
-          <div className="container mb-16 bg-white/85 rounded-2xl p-4">
+          <div className="container mb-16 rounded-2xl p-4">
             <RichText className="text-center" data={introContent} enableGutter={false} />
           </div>
         )}

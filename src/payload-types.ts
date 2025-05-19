@@ -151,7 +151,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero';
     richText?: {
       root: {
         type: string;
@@ -167,6 +167,27 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    cerrajerosBlocks?:
+      | {
+          blockTitle?: string | null;
+          blockContent?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
     links?:
       | {
           link: {
@@ -192,6 +213,14 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    /**
+     * Añade un logo para mostrar en el héroe
+     */
+    logo?: (number | null) | Media;
+    /**
+     * Añade un logo en otro color para mostrar en el héroe en dimensiones mas pequeñas
+     */
+    logoAlt?: (number | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -1137,6 +1166,13 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        cerrajerosBlocks?:
+          | T
+          | {
+              blockTitle?: T;
+              blockContent?: T;
+              id?: T;
+            };
         links?:
           | T
           | {
@@ -1153,6 +1189,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        logo?: T;
+        logoAlt?: T;
       };
   layout?:
     | T
@@ -1802,8 +1840,6 @@ export interface Footer {
 export interface EmergencyBanner {
   id: number;
   banner: string;
-  backgroundColor?: ('red' | 'yellow' | 'orange') | null;
-  isActive?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1859,8 +1895,6 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface EmergencyBannerSelect<T extends boolean = true> {
   banner?: T;
-  backgroundColor?: T;
-  isActive?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

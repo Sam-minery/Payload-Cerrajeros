@@ -22,7 +22,10 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('w-auto h-auto max-w-[180px] sm:max-w-[220px] lg:max-w-[300px] object-contain', className)}
+      className={clsx(
+        'w-auto h-auto max-w-[160px] xs:max-w-[180px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[340px] xl:max-w-[400px] object-contain',
+        className
+      )}
       src="/media/Logo-AperturasExpress-300x200.png"
     />
   )

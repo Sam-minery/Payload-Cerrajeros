@@ -13,7 +13,7 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { SeccionComentarios } from '@/blocks/SeccionComentarios/config'
-import { SeccionServicios } from '@/blocks/SeccionServicios/config'
+import { SeccionServicios } from '@/blocks/SeccionBeneficios/config'
 import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
 import { SeccionInformativo } from '@/blocks/SeccionInformativo/config'
 

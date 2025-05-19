@@ -13,32 +13,6 @@ export const EmergencyBanner: GlobalConfig = {
       label: 'Texto del Banner',
       required: true,
     },
-    {
-      name: 'backgroundColor',
-      type: 'select',
-      options: [
-        {
-          label: 'Rojo',
-          value: 'red',
-        },
-        {
-          label: 'Amarillo',
-          value: 'yellow',
-        },
-        {
-          label: 'Naranja',
-          value: 'orange',
-        },
-      ],
-      defaultValue: 'red',
-      label: 'Color de Fondo',
-    },
-    {
-      name: 'isActive',
-      type: 'checkbox',
-      label: 'Activar Banner',
-      defaultValue: false,
-    },
   ],
 }
 

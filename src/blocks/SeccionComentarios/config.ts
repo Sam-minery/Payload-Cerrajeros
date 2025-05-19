@@ -78,7 +78,7 @@ export const SeccionComentarios: Block = {
         {
             name: 'comments',
             type: 'array',
-            maxRows: 6,
+            maxRows: 10,
             minRows: 1,
             label: 'comentarios',
             admin: {

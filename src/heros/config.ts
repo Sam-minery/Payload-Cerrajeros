@@ -35,6 +35,10 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Cerrajeros',
+          value: 'cerrajerosHero',
+        },
       ],
       required: true,
     },
@@ -53,6 +57,36 @@ export const hero: Field = {
       }),
       label: false,
     },
+    {
+      name: 'cerrajerosBlocks',
+      type: 'array',
+      admin: {
+        condition: (_, { type } = {}) => type === 'cerrajerosHero',
+      },
+      label: 'Bloques de Texto',
+      fields: [
+        {
+          name: 'blockTitle',
+          type: 'text',
+          label: 'Título del Bloque',
+        },
+        {
+          name: 'blockContent',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => {
+              return [
+                ...rootFeatures,
+                HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                FixedToolbarFeature(),
+                InlineToolbarFeature(),
+              ]
+            },
+          }),
+          label: 'Contenido',
+        }
+      ],
+    },
     linkGroup({
       overrides: {
         maxRows: 15,
@@ -62,10 +96,29 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'cerrajerosHero'].includes(type),
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Logo',
+      admin: {
+        description: 'Añade un logo para mostrar en el héroe',
+      },
+    },
+    {
+      name: 'logoAlt',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Logo Alternativo',
+      admin: {
+        description: 'Añade un logo en otro color para mostrar en el héroe en dimensiones mas pequeñas',
+        condition: (_, { type } = {}) => type === 'cerrajerosHero',
+      },
     },
   ],
   label: false,

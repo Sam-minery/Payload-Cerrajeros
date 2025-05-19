@@ -35,28 +35,28 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
     }, []);
 
     return (
-        <section className={cn('py-16 bg-gray-100 flex justify-center items-center rounded-xl', {
+        <section className={cn('py-8 md:py-16 flex justify-center items-center', {
             '': enableGutter
         }, className)}>
-            <div className="w-full max-w-7xl mx-auto">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-0">
                 {title && (
-                    <h2 className="text-4xl font-bold text-black text-center mb-6">
+                    <h2 className="text-2xl md:text-4xl font-bold text-black text-center mb-4 md:mb-6">
                         {title}
                     </h2>
                 )}
 
-                <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
                     <div 
                         ref={contentRef}
                         className="w-full md:w-1/2 opacity-0"
                     >
                         {content && (
-                            <div className="mb-6">
+                            <div className="mb-4 md:mb-6">
                                 <RichText 
                                     data={content} 
                                     enableGutter={false}
                                     enableProse={true}
-                                    className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black text-xl"
+                                    className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black text-base md:text-xl"
                                 />
                             </div>
                         )}
