@@ -16,6 +16,12 @@ const seccionInformativoFields: Field[] = [
         label: 'Título Sección',
     },
     {
+        name: 'enableGrayBackground',
+        type: 'checkbox',
+        label: 'Activar fondo gris',
+        defaultValue: false,
+    },
+    {
         type: 'richText',
         name: 'content',
         label: 'Contenido',

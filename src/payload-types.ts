@@ -881,6 +881,7 @@ export interface SeccionServiciosBlock {
  */
 export interface SeccionInformativoBlock {
   title: string;
+  enableGrayBackground?: boolean | null;
   content?: {
     root: {
       type: string;
@@ -1355,6 +1356,7 @@ export interface SeccionServiciosBlockSelect<T extends boolean = true> {
  */
 export interface SeccionInformativoBlockSelect<T extends boolean = true> {
   title?: T;
+  enableGrayBackground?: T;
   content?: T;
   image?: T;
   id?: T;

@@ -9,9 +9,17 @@ import { useEffect, useRef } from 'react';
 export type Props = SeccionInformativoBlock & {
     className?: string;
     enableGutter?: boolean;
+    enableGrayBackground?: boolean;
 }
 
-export function SeccionInformativoBlock({ title, content, image, className, enableGutter = true }: Props) {
+export function SeccionInformativoBlock({ 
+    title, 
+    content, 
+    image, 
+    className, 
+    enableGutter = true,
+    enableGrayBackground = false 
+}: Props) {
     const contentRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
 
@@ -20,9 +28,13 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     if (entry.target === contentRef.current) {
-                        entry.target.classList.add('animate-fade-in-left');
+                        entry.target.classList.add(
+                            enableGrayBackground ? 'animate-fade-in-right' : 'animate-fade-in-left'
+                        );
                     } else if (entry.target === imageRef.current) {
-                        entry.target.classList.add('animate-fade-in-right');
+                        entry.target.classList.add(
+                            enableGrayBackground ? 'animate-fade-in-left' : 'animate-fade-in-right'
+                        );
                     }
                 }
             });
@@ -32,11 +44,11 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
         if (imageRef.current) observer.observe(imageRef.current);
 
         return () => observer.disconnect();
-    }, []);
+    }, [enableGrayBackground]);
 
     return (
-        <section className={cn('py-8 md:py-16 flex justify-center items-center', {
-            '': enableGutter
+        <section className={cn('py-8 md:py-16 flex justify-center items-center w-full', {
+            'bg-gray-100': enableGrayBackground
         }, className)}>
             <div className="w-full max-w-7xl mx-auto px-4 md:px-0">
                 {title && (
@@ -45,23 +57,9 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
                     </h2>
                 )}
 
-                <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
-                    <div 
-                        ref={contentRef}
-                        className="w-full md:w-1/2 opacity-0"
-                    >
-                        {content && (
-                            <div className="mb-4 md:mb-6">
-                                <RichText 
-                                    data={content} 
-                                    enableGutter={false}
-                                    enableProse={true}
-                                    className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black text-base md:text-xl"
-                                />
-                            </div>
-                        )}
-                    </div>
-
+                <div className={cn("flex flex-col md:flex-row gap-4 md:gap-8 items-center", {
+                    'md:flex-row-reverse': !enableGrayBackground
+                })}>
                     {image && (
                         <div 
                             ref={imageRef}
@@ -77,6 +75,22 @@ export function SeccionInformativoBlock({ title, content, image, className, enab
                             </div>
                         </div>
                     )}
+
+                    <div 
+                        ref={contentRef}
+                        className="w-full md:w-1/2 opacity-0"
+                    >
+                        {content && (
+                            <div className="mb-4 md:mb-6">
+                                <RichText 
+                                    data={content} 
+                                    enableGutter={false}
+                                    enableProse={true}
+                                    className="[&_strong]:font-bold [&_strong]:text-black [&_p]:text-black text-base md:text-xl"
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>

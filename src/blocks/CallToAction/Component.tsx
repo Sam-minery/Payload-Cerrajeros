@@ -8,13 +8,13 @@ import { CMSLink } from '@/components/Link'
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
-        <div className="rotating-border-container animate-pulse-scale">
-          <div className="rotating-border">
-            <div className="rotating-border-content bg-card rounded border-border border p-4 flex flex-col gap-8">
-              <div className="mx-auto text-center bg-gray-100">
+        <div className="rotating-border-container animate-pulse-scale p-0 w-full max-w-[80rem]">
+          <div className="rotating-border m-0">
+            <div className="rotating-border-content bg-gray-100 rounded border-border border flex flex-col m-0">
+              <div className="mx-auto text-center bg-gray-100 w-full p-6 px-12 text-lg">
                 {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
               </div>
-              <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-gray-100">
+              <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-gray-100 w-full p-6 px-12">
                 {(links || []).map(({ link }, i) => {
                   const bgColorClass = i === 0 ? 'bg-red-500 hover:bg-red-600 text-bold text-white' : 
                                      i === 1 ? 'bg-green-500 hover:bg-green-600 text-bold text-white' :
@@ -23,7 +23,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
                   return <CMSLink 
                     key={i} 
                     size="lg" 
-                    className={`w-full md:w-auto ${bgColorClass}`}
+                    className={`w-full md:w-auto ${bgColorClass} text-lg px-8 py-3`}
                     {...link} 
                   />
                 })}
