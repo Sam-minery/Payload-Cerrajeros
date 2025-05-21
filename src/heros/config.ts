@@ -4,6 +4,8 @@ import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
+  BoldFeature,
+  ParagraphFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
@@ -46,14 +48,16 @@ export const hero: Field = {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
-        },
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          HeadingFeature({
+            enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
+          }),
+          ParagraphFeature(),
+          BoldFeature(),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
       }),
       label: false,
     },
@@ -74,14 +78,16 @@ export const hero: Field = {
           name: 'blockContent',
           type: 'richText',
           editor: lexicalEditor({
-            features: ({ rootFeatures }) => {
-              return [
-                ...rootFeatures,
-                HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                FixedToolbarFeature(),
-                InlineToolbarFeature(),
-              ]
-            },
+            features: ({ defaultFeatures }) => [
+              ...defaultFeatures,
+              HeadingFeature({
+                enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
+              }),
+              ParagraphFeature(),
+              BoldFeature(),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
           }),
           label: 'Contenido',
         }
