@@ -11,6 +11,7 @@ import { SeccionComentariosBlock } from '@/blocks/SeccionComentarios/Component'
 import { SeccionServiciosBlock } from '@/blocks/SeccionBeneficios/Component'
 import { SeccionProvinciasBlock } from '@/blocks/SeccionProvincias/Component'
 import { SeccionInformativoBlock } from '@/blocks/SeccionInformativo/Component'
+import { SeccionInstruccionesBlock } from '@/blocks/SeccionInstrucciones/Component'
 
 
 const blockComponents = {
@@ -23,6 +24,7 @@ const blockComponents = {
   seccionServicios: SeccionServiciosBlock,
   seccionProvincias: SeccionProvinciasBlock,
   seccionInformativo: SeccionInformativoBlock, 
+  seccionInstrucciones: SeccionInstruccionesBlock,
 }
 
 export const RenderBlocks: React.FC<{

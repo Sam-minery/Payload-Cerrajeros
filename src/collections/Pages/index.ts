@@ -16,6 +16,7 @@ import { SeccionComentarios } from '@/blocks/SeccionComentarios/config'
 import { SeccionServicios } from '@/blocks/SeccionBeneficios/config'
 import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
 import { SeccionInformativo } from '@/blocks/SeccionInformativo/config'
+import { SeccionInstrucciones } from '@/blocks/SeccionInstrucciones/config'
 
 import {
   MetaDescriptionField,
@@ -79,7 +80,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo, SeccionInstrucciones],
               required: true,
               admin: {
                 initCollapsed: true,

@@ -47,12 +47,12 @@ export const CerrajerosHero: React.FC<Page['hero']> = ({
               <>
                 <Media 
                   resource={logo}
-                  className="hidden lg:block h-[400px] w-[400px] object-contain"
+                  className="hidden lg:block h-[350px] w-[350px] object-contain"
                   priority
                 />
                 <Media 
                   resource={logoAlt && typeof logoAlt === 'object' ? logoAlt : logo}
-                  className="lg:hidden h-[300px] w-[300px] object-contain"
+                  className="lg:hidden h-[250px] w-[250px] object-contain"
                   priority
                 />
               </>
