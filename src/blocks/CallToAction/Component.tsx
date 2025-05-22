@@ -12,7 +12,11 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
           <div className="rotating-border m-0">
             <div className="rotating-border-content bg-gray-100 rounded border-border border flex flex-col m-0">
               <div className="mx-auto text-center bg-gray-100 w-full p-6 px-12 text-lg">
-                {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
+                {richText && (
+                  <div className="[&_h2]:text-red-500 [&_h2]:text-3xl [&_h2]:font-bold !important">
+                    <RichText className="mb-0" data={richText} enableGutter={false} />
+                  </div>
+                )}
               </div>
               <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-gray-100 w-full p-6 px-12">
                 {(links || []).map(({ link }, i) => {
