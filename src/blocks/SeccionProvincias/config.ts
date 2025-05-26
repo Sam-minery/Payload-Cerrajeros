@@ -2,6 +2,7 @@ import type { Block } from 'payload';
 
 export const SeccionProvincias: Block = {
   slug: 'seccionProvincias',
+  interfaceName: 'SeccionProvinciasBlock',
   labels: {
     singular: 'Sección Provincia',
     plural: 'Seccion Provincias',
@@ -10,7 +11,7 @@ export const SeccionProvincias: Block = {
     {
       name: 'nombreSeccionProvincias',
       type: 'text',
-      label: 'Nombre Seccion provincias',
+      label: 'Nombre de la Sección',
     },
     {
       name: 'paginasRelacionadas',
@@ -18,7 +19,13 @@ export const SeccionProvincias: Block = {
       relationTo: 'pages',
       hasMany: true,
       label: 'Páginas Relacionadas',
-      required: true,
+    },
+    {
+      name: 'provinciasRelacionadas',
+      type: 'relationship',
+      relationTo: 'provincias',
+      hasMany: true,
+      label: 'Provincias Relacionadas',
     },
   ],
 };

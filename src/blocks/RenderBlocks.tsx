@@ -9,7 +9,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { SeccionComentariosBlock } from '@/blocks/SeccionComentarios/Component'
 import { SeccionServiciosBlock } from '@/blocks/SeccionBeneficios/Component'
-import { SeccionProvinciasBlock } from '@/blocks/SeccionProvincias/Component'
+import { SeccionProvinciasBlock } from './SeccionProvincias/Component'
 import { SeccionInformativoBlock } from '@/blocks/SeccionInformativo/Component'
 import { SeccionInstruccionesBlock } from '@/blocks/SeccionInstrucciones/Component'
 
