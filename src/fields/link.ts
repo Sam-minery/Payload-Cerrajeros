@@ -49,6 +49,10 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
                 label: 'Custom URL',
                 value: 'custom',
               },
+              {
+                label: 'Contacto',
+                value: 'contacto',
+              },
             ],
           },
           {
@@ -85,6 +89,16 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
         condition: (_, siblingData) => siblingData?.type === 'custom',
       },
       label: 'Custom URL',
+      required: true,
+    },
+    {
+      name: 'contacto',
+      type: 'relationship',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'contacto',
+      },
+      label: 'Seleccionar contacto',
+      relationTo: ['contactos'],
       required: true,
     },
   ]

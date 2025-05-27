@@ -22,6 +22,7 @@ import { EmergencyBanner } from './Emergency-banner/config'
 import { SeccionInstrucciones } from './blocks/SeccionInstrucciones/config'
 import { SeccionComentarios } from './blocks/SeccionComentarios/config'
 import { SeccionInformativo } from './blocks/SeccionInformativo/config'
+import { Contactos } from './collections/Contactos'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -78,6 +79,7 @@ export default buildConfig({
     Media, 
     Categories, 
     Users,
+    Contactos
   ],
   
   blocks: [

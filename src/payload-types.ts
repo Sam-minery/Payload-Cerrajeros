@@ -78,6 +78,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    contactos: Contacto;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -96,6 +97,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    contactos: ContactosSelect<false> | ContactosSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -414,7 +416,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'contacto') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -426,6 +428,10 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            contacto?: {
+              relationTo: 'contactos';
+              value: number | Contacto;
+            } | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -564,6 +570,17 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactos".
+ */
+export interface Contacto {
+  id: number;
+  nombre: string;
+  numero: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -585,7 +602,7 @@ export interface CallToActionBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'contacto') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -597,6 +614,10 @@ export interface CallToActionBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          contacto?: {
+            relationTo: 'contactos';
+            value: number | Contacto;
+          } | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -635,7 +656,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'contacto') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -647,6 +668,10 @@ export interface ContentBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          contacto?: {
+            relationTo: 'contactos';
+            value: number | Contacto;
+          } | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1013,7 +1038,7 @@ export interface Provincia {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'contacto') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -1025,6 +1050,10 @@ export interface Provincia {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            contacto?: {
+              relationTo: 'contactos';
+              value: number | Contacto;
+            } | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -1119,7 +1148,7 @@ export interface Municipio {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'contacto') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -1131,6 +1160,10 @@ export interface Municipio {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            contacto?: {
+              relationTo: 'contactos';
+              value: number | Contacto;
+            } | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -1378,6 +1411,10 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'contactos';
+        value: number | Contacto;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1467,6 +1504,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    contacto?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1520,6 +1558,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              contacto?: T;
               label?: T;
               appearance?: T;
             };
@@ -1546,6 +1585,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              contacto?: T;
               label?: T;
               appearance?: T;
             };
@@ -1697,6 +1737,7 @@ export interface ProvinciasSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    contacto?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1762,6 +1803,7 @@ export interface MunicipiosSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    contacto?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1959,6 +2001,16 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactos_select".
+ */
+export interface ContactosSelect<T extends boolean = true> {
+  nombre?: T;
+  numero?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2223,7 +2275,7 @@ export interface Header {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'contacto') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2235,6 +2287,10 @@ export interface Header {
                 value: number | Post;
               } | null);
           url?: string | null;
+          contacto?: {
+            relationTo: 'contactos';
+            value: number | Contacto;
+          } | null;
           label: string;
         };
         id?: string | null;
@@ -2252,7 +2308,7 @@ export interface Footer {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'contacto') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2264,6 +2320,10 @@ export interface Footer {
                 value: number | Post;
               } | null);
           url?: string | null;
+          contacto?: {
+            relationTo: 'contactos';
+            value: number | Contacto;
+          } | null;
           label: string;
         };
         id?: string | null;
@@ -2297,6 +2357,7 @@ export interface HeaderSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              contacto?: T;
               label?: T;
             };
         id?: T;
@@ -2320,6 +2381,7 @@ export interface FooterSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              contacto?: T;
               label?: T;
             };
         id?: T;
