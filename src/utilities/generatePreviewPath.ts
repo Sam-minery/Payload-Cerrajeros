@@ -4,6 +4,7 @@ const collectionPrefixMap: Partial<Record<string, string>> = {
   pages: '',
   posts: '/posts',
   provincias: '/provincias',
+  municipios: '/municipios',
 }
 
 type Props = {

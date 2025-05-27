@@ -73,6 +73,7 @@ export interface Config {
   collections: {
     pages: Page;
     provincias: Provincia;
+    municipios: Municipio;
     posts: Post;
     media: Media;
     categories: Category;
@@ -90,6 +91,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     provincias: ProvinciasSelect<false> | ProvinciasSelect<true>;
+    municipios: MunicipiosSelect<false> | MunicipiosSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -958,6 +960,7 @@ export interface SeccionProvinciasBlock {
   nombreSeccionProvincias?: string | null;
   paginasRelacionadas?: (number | Page)[] | null;
   provinciasRelacionadas?: (number | Provincia)[] | null;
+  municipiosRelacionados?: (number | Municipio)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'seccionProvincias';
@@ -967,6 +970,112 @@ export interface SeccionProvinciasBlock {
  * via the `definition` "provincias".
  */
 export interface Provincia {
+  id: number;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cerrajerosBlocks?:
+      | {
+          blockTitle?: string | null;
+          blockContent?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+    /**
+     * Añade un logo para mostrar en el héroe
+     */
+    logo?: (number | null) | Media;
+    /**
+     * Añade un logo en otro color para mostrar en el héroe en dimensiones mas pequeñas
+     */
+    logoAlt?: (number | null) | Media;
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | SeccionComentariosBlock
+    | SeccionServiciosBlock
+    | SeccionProvinciasBlock
+    | SeccionInformativoBlock
+    | SeccionInstruccionesBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "municipios".
+ */
+export interface Municipio {
   id: number;
   title: string;
   hero: {
@@ -1249,6 +1358,10 @@ export interface PayloadLockedDocument {
         value: number | Provincia;
       } | null)
     | ({
+        relationTo: 'municipios';
+        value: number | Municipio;
+      } | null)
+    | ({
         relationTo: 'posts';
         value: number | Post;
       } | null)
@@ -1522,6 +1635,7 @@ export interface SeccionProvinciasBlockSelect<T extends boolean = true> {
   nombreSeccionProvincias?: T;
   paginasRelacionadas?: T;
   provinciasRelacionadas?: T;
+  municipiosRelacionados?: T;
   id?: T;
   blockName?: T;
 }
@@ -1560,6 +1674,71 @@ export interface SeccionInstruccionesBlockSelect<T extends boolean = true> {
  * via the `definition` "provincias_select".
  */
 export interface ProvinciasSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        cerrajerosBlocks?:
+          | T
+          | {
+              blockTitle?: T;
+              blockContent?: T;
+              id?: T;
+            };
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+        logo?: T;
+        logoAlt?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
+        seccionServicios?: T | SeccionServiciosBlockSelect<T>;
+        seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
+        seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
+        seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "municipios_select".
+ */
+export interface MunicipiosSelect<T extends boolean = true> {
   title?: T;
   hero?:
     | T
@@ -2175,6 +2354,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'provincias';
           value: number | Provincia;
+        } | null)
+      | ({
+          relationTo: 'municipios';
+          value: number | Municipio;
         } | null)
       | ({
           relationTo: 'posts';

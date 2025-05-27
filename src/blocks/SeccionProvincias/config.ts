@@ -4,8 +4,8 @@ export const SeccionProvincias: Block = {
   slug: 'seccionProvincias',
   interfaceName: 'SeccionProvinciasBlock',
   labels: {
-    singular: 'Sección Provincia',
-    plural: 'Seccion Provincias',
+    singular: 'Sección Provincias y Municipios',
+    plural: 'Secciones Provincias y Municipios',
   },
   fields: [
     {
@@ -26,6 +26,13 @@ export const SeccionProvincias: Block = {
       relationTo: 'provincias',
       hasMany: true,
       label: 'Provincias Relacionadas',
+    },
+    {
+      name: 'municipiosRelacionados',
+      type: 'relationship',
+      relationTo: 'municipios',
+      hasMany: true,
+      label: 'Municipios Relacionados',
     },
   ],
 };

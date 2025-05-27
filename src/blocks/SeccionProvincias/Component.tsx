@@ -1,30 +1,31 @@
 import React from 'react';
 import { CMSLink } from '@/components/Link';
-import type { Page, Provincia } from '@/payload-types';
+import type { Page, Provincia, Municipio } from '@/payload-types';
 
 interface Props {
   paginasRelacionadas?: Page[];
   provinciasRelacionadas?: Provincia[];
+  municipiosRelacionados?: Municipio[];
   nombreSeccionProvincias?: string;
 }
 
 export const SeccionProvinciasBlock: React.FC<Props> = ({ 
   paginasRelacionadas, 
-  provinciasRelacionadas, 
+  provinciasRelacionadas,
+  municipiosRelacionados, 
   nombreSeccionProvincias 
 }) => { 
-  // Debug temporal - eliminar después
-  console.log('paginasRelacionadas:', paginasRelacionadas);
-  console.log('provinciasRelacionadas:', provinciasRelacionadas);
-  
-  // Combinar ambas collections en un solo array con validación de datos
+  // Combinar todas las collections en un solo array con validación de datos
   const itemsRelacionados = [
     ...(paginasRelacionadas || [])
       .filter(item => item && item.id && item.slug && item.title)
       .map((item, index) => ({ ...item, type: 'page' as const, uniqueKey: `page-${item.id}-${index}` })),
     ...(provinciasRelacionadas || [])
       .filter(item => item && item.id && item.slug && item.title)
-      .map((item, index) => ({ ...item, type: 'provincia' as const, uniqueKey: `provincia-${item.id}-${index}` }))
+      .map((item, index) => ({ ...item, type: 'provincia' as const, uniqueKey: `provincia-${item.id}-${index}` })),
+    ...(municipiosRelacionados || [])
+      .filter(item => item && item.id && item.slug && item.title)
+      .map((item, index) => ({ ...item, type: 'municipio' as const, uniqueKey: `municipio-${item.id}-${index}` }))
   ];
 
   return ( 
@@ -37,7 +38,14 @@ export const SeccionProvinciasBlock: React.FC<Props> = ({
         )} 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> 
           {itemsRelacionados?.map((item) => {
-            const baseUrl = item.type === 'provincia' ? '/provincias' : '';
+            // Determinar la URL base según el tipo
+            let baseUrl = '';
+            if (item.type === 'provincia') {
+              baseUrl = '/provincias';
+            } else if (item.type === 'municipio') {
+              baseUrl = '/municipios';
+            }
+            
             const url = `${baseUrl}/${item.slug}`;
             
             return (

@@ -10,6 +10,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Provincias } from './collections/Provincias'
+import { Municipios } from './collections/Municipios'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
@@ -72,6 +73,7 @@ export default buildConfig({
   collections: [
     Pages, 
     Provincias,
+    Municipios,
     Posts, 
     Media, 
     Categories, 
