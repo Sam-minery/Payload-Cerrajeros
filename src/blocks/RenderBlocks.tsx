@@ -12,7 +12,7 @@ import { SeccionServiciosBlock } from '@/blocks/SeccionBeneficios/Component'
 import { SeccionProvinciasBlock } from './SeccionProvincias/Component'
 import { SeccionInformativoBlock } from '@/blocks/SeccionInformativo/Component'
 import { SeccionInstruccionesBlock } from '@/blocks/SeccionInstrucciones/Component'
-
+import EmergencyBannerBlock from '@/blocks/EmergencyBanner/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -25,6 +25,7 @@ const blockComponents = {
   seccionProvincias: SeccionProvinciasBlock,
   seccionInformativo: SeccionInformativoBlock, 
   seccionInstrucciones: SeccionInstruccionesBlock,
+  emergencyBanner: EmergencyBannerBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -39,6 +40,10 @@ export const RenderBlocks: React.FC<{
       <Fragment>
         {blocks.map((block, index) => {
           const { blockType } = block
+
+          if (blockType === 'emergencyBanner') {
+            return null
+          }
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]

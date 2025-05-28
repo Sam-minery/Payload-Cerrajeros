@@ -17,7 +17,7 @@ import { SeccionServicios } from '@/blocks/SeccionBeneficios/config'
 import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
 import { SeccionInformativo } from '@/blocks/SeccionInformativo/config'
 import { SeccionInstrucciones } from '@/blocks/SeccionInstrucciones/config'
-
+import { EmergencyBanner } from '@/blocks/EmergencyBanner/config'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -80,7 +80,7 @@ export const Municipios: CollectionConfig<'municipios'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo, SeccionInstrucciones],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo, SeccionInstrucciones, EmergencyBanner],
               required: true,
               admin: {
                 initCollapsed: true,

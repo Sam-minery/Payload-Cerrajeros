@@ -69,6 +69,7 @@ export interface Config {
     seccionInstrucciones: SeccionInstruccionesBlock;
     seccionComentarios: SeccionComentariosBlock;
     seccionInformativo: SeccionInformativoBlock;
+    emergencyBanner: EmergencyBannerBlock;
   };
   collections: {
     pages: Page;
@@ -113,12 +114,10 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    'emergency-banner': EmergencyBanner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    'emergency-banner': EmergencyBannerSelect<false> | EmergencyBannerSelect<true>;
   };
   locale: null;
   user: User & {
@@ -370,6 +369,35 @@ export interface SeccionInformativoBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EmergencyBannerBlock".
+ */
+export interface EmergencyBannerBlock {
+  title: string;
+  /**
+   * Selecciona el contacto que se mostrará en el banner de emergencia
+   */
+  contacto: number | Contacto;
+  /**
+   * Controla si el banner se muestra o no en el sitio web
+   */
+  isActive?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'emergencyBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactos".
+ */
+export interface Contacto {
+  id: number;
+  nombre: string;
+  numero: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -462,6 +490,7 @@ export interface Page {
     | SeccionProvinciasBlock
     | SeccionInformativoBlock
     | SeccionInstruccionesBlock
+    | EmergencyBannerBlock
   )[];
   meta?: {
     title?: string | null;
@@ -567,17 +596,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contactos".
- */
-export interface Contacto {
-  id: number;
-  nombre: string;
-  numero: string;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1084,6 +1102,7 @@ export interface Provincia {
     | SeccionProvinciasBlock
     | SeccionInformativoBlock
     | SeccionInstruccionesBlock
+    | EmergencyBannerBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1194,6 +1213,7 @@ export interface Municipio {
     | SeccionProvinciasBlock
     | SeccionInformativoBlock
     | SeccionInstruccionesBlock
+    | EmergencyBannerBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1527,6 +1547,7 @@ export interface PagesSelect<T extends boolean = true> {
         seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
         seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
         seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+        emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
       };
   meta?:
     | T
@@ -1711,6 +1732,17 @@ export interface SeccionInstruccionesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EmergencyBannerBlock_select".
+ */
+export interface EmergencyBannerBlockSelect<T extends boolean = true> {
+  title?: T;
+  contacto?: T;
+  isActive?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "provincias_select".
  */
 export interface ProvinciasSelect<T extends boolean = true> {
@@ -1760,6 +1792,7 @@ export interface ProvinciasSelect<T extends boolean = true> {
         seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
         seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
         seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+        emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
       };
   meta?:
     | T
@@ -1826,6 +1859,7 @@ export interface MunicipiosSelect<T extends boolean = true> {
         seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
         seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
         seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+        emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
       };
   meta?:
     | T
@@ -2334,16 +2368,6 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "emergency-banner".
- */
-export interface EmergencyBanner {
-  id: number;
-  banner: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2386,16 +2410,6 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "emergency-banner_select".
- */
-export interface EmergencyBannerSelect<T extends boolean = true> {
-  banner?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

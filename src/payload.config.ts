@@ -18,12 +18,12 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-import { EmergencyBanner } from './Emergency-banner/config'
+
 import { SeccionInstrucciones } from './blocks/SeccionInstrucciones/config'
 import { SeccionComentarios } from './blocks/SeccionComentarios/config'
 import { SeccionInformativo } from './blocks/SeccionInformativo/config'
 import { Contactos } from './collections/Contactos'
-
+import { EmergencyBanner } from '@/blocks/EmergencyBanner/config'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -86,12 +86,12 @@ export default buildConfig({
     SeccionInstrucciones,
     SeccionComentarios,
     SeccionInformativo,
+    EmergencyBanner
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [
     Header, 
     Footer,
-    EmergencyBanner
   ],
   plugins: [
     ...plugins,
