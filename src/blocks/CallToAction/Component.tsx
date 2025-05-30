@@ -13,7 +13,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
             <div className="rotating-border-content bg-gray-100 rounded border-border border flex flex-col m-0">
               <div className="mx-auto text-center bg-gray-100 w-full p-6 px-12 text-lg">
                 {richText && (
-                  <div className="[&_h2]:text-red-500 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)]">
+                  <div className="[&_h2]:text-red-500 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
                     <RichText className="mb-0" data={richText} enableGutter={false} />
                   </div>
                 )}
