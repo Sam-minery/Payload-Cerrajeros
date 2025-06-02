@@ -41,6 +41,10 @@ export const hero: Field = {
           label: 'Cerrajeros',
           value: 'cerrajerosHero',
         },
+        {
+          label: 'Custom Hero',
+          value: 'customHero',
+        },
       ],
       required: true,
     },
@@ -102,10 +106,37 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'cerrajerosHero'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'cerrajerosHero', 'customHero'].includes(type),
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'additionalSections',
+      type: 'array',
+      admin: {
+        condition: (_, { type } = {}) => type === 'customHero',
+      },
+      label: 'Secciones Adicionales',
+      fields: [
+        {
+          name: 'content',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => [
+              ...defaultFeatures,
+              HeadingFeature({
+                enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
+              }),
+              ParagraphFeature(),
+              BoldFeature(),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
+          }),
+          label: 'Contenido',
+        }
+      ],
     },
     {
       name: 'logo',

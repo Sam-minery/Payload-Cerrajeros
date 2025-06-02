@@ -76,6 +76,11 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Descripción',
+    },
+    {
       type: 'tabs',
       tabs: [
         {

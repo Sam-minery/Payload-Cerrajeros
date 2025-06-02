@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { CallToActionAlt } from '../../blocks/CallToActionAlt/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -26,41 +27,27 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
-export const Municipios: CollectionConfig<'municipios'> = {
+export const Municipios: CollectionConfig = {
   slug: 'municipios',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+    preview: () => 'https://payload-cms-demo.com',
+    group: 'Content',
+  },
   access: {
-    create: authenticated,
-    delete: authenticated,
     read: authenticatedOrPublished,
     update: authenticated,
+    create: authenticated,
+    delete: authenticated,
   },
-  // This config controls what's populated by default when a municipio is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'municipios'>
-  defaultPopulate: {
-    title: true,
-    slug: true,
+  hooks: {
+    beforeChange: [populatePublishedAt],
+    afterChange: [revalidateMunicipio],
+    afterDelete: [revalidateDeleteMunicipio],
   },
-  admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'municipios',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'municipios',
-        req,
-      }),
-    useAsTitle: 'title',
+  versions: {
+    drafts: true,
   },
   fields: [
     {
@@ -69,76 +56,35 @@ export const Municipios: CollectionConfig<'municipios'> = {
       required: true,
     },
     {
-      type: 'tabs',
-      tabs: [
-        {
-          fields: [hero],
-          label: 'Hero',
-        },
-        {
-          fields: [
-            {
-              name: 'layout',
-              type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo, SeccionInstrucciones, EmergencyBanner],
-              required: true,
-              admin: {
-                initCollapsed: true,
-              },
-            },
-          ],
-          label: 'Content',
-        },
-        {
-          name: 'meta',
-          label: 'SEO',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
-
-            MetaDescriptionField({}),
-            PreviewField({
-              // if the `generateUrl` function is configured
-              hasGenerateFn: true,
-
-              // field paths to match the target field for data
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
-          ],
-        },
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        CallToAction,
+        CallToActionAlt,
+        Content,
+        MediaBlock,
+        Archive,
+        FormBlock,
+        SeccionComentarios,
+        SeccionServicios,
+        SeccionProvincias,
+        SeccionInformativo,
+        SeccionInstrucciones,
+        EmergencyBanner,
       ],
     },
-    {
-      name: 'publishedAt',
-      type: 'date',
-      admin: {
-        position: 'sidebar',
-      },
-    },
+    hero,
     ...slugField(),
-  ],
-  hooks: {
-    afterChange: [revalidateMunicipio],
-    beforeChange: [populatePublishedAt],
-    afterDelete: [revalidateDeleteMunicipio],
-  },
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
+    {
+      name: 'meta',
+      type: 'group',
+      fields: [
+        MetaTitleField({}),
+        MetaDescriptionField({}),
+        MetaImageField({ relationTo: 'media' }),
+      ],
     },
-    maxPerDoc: 50,
-  },
+    OverviewField({}),
+    PreviewField({}),
+  ],
 }

@@ -69,7 +69,9 @@ export interface Config {
     seccionInstrucciones: SeccionInstruccionesBlock;
     seccionComentarios: SeccionComentariosBlock;
     seccionInformativo: SeccionInformativoBlock;
+    seccionSecuencial: SeccionSecuencialBlock;
     emergencyBanner: EmergencyBannerBlock;
+    bannerEmergenciaAlt: BannerEmergenciaAltBlock;
   };
   collections: {
     pages: Page;
@@ -369,6 +371,23 @@ export interface SeccionInformativoBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionSecuencialBlock".
+ */
+export interface SeccionSecuencialBlock {
+  titulo: string;
+  descripcion: string;
+  secciones: {
+    media: number | Media;
+    titulo: string;
+    descripcion: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionSecuencial';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "EmergencyBannerBlock".
  */
 export interface EmergencyBannerBlock {
@@ -398,13 +417,25 @@ export interface Contacto {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerEmergenciaAltBlock".
+ */
+export interface BannerEmergenciaAltBlock {
+  textoPrincipal: string;
+  contacto?: (number | null) | Contacto;
+  numeroDefault: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bannerEmergenciaAlt';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero' | 'customHero';
     richText?: {
       root: {
         type: string;
@@ -470,6 +501,26 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    additionalSections?:
+      | {
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Añade un logo para mostrar en el héroe
      */
@@ -481,16 +532,41 @@ export interface Page {
   };
   layout: (
     | CallToActionBlock
+    | CallToActionBlockAlt
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
+    | ArchiveBlockAlt
     | FormBlock
     | SeccionComentariosBlock
+    | SeccionComentariosAltBlock
     | SeccionServiciosBlock
     | SeccionProvinciasBlock
+    | {
+        items: {
+          pagina:
+            | {
+                relationTo: 'pages';
+                value: number | Page;
+              }
+            | {
+                relationTo: 'provincias';
+                value: number | Provincia;
+              };
+          estado: 'disponible' | 'no_disponible';
+          id?: string | null;
+        }[];
+        titulo?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'seccionProvinciasAlt';
+      }
     | SeccionInformativoBlock
+    | SeccionInformativoAltBlock
     | SeccionInstruccionesBlock
+    | SeccionSecuencialBlock
     | EmergencyBannerBlock
+    | BannerEmergenciaAltBlock
   )[];
   meta?: {
     title?: string | null;
@@ -514,6 +590,7 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  description?: string | null;
   heroImage?: (number | null) | Media;
   /**
    * Selecciona un icono para este post
@@ -651,6 +728,58 @@ export interface CallToActionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlockAlt".
+ */
+export interface CallToActionBlockAlt {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'contacto') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          contacto?: {
+            relationTo: 'contactos';
+            value: number | Contacto;
+          } | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaAlt';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
@@ -747,6 +876,44 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlockAlt".
+ */
+export interface ArchiveBlockAlt {
+  title: string;
+  description?: string | null;
+  icon?: (number | null) | Media;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (number | null) | Media;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archiveAlt';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -950,6 +1117,42 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionComentariosAltBlock".
+ */
+export interface SeccionComentariosAltBlock {
+  titulo: string;
+  descripcion: string;
+  comments?:
+    | {
+        userName: string;
+        comment?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        userIcon: number | Media;
+        puntuacion: number;
+        id?: string | null;
+      }[]
+    | null;
+  starIcon: number | Media;
+  starIconEmpt: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionComentariosAlt';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SeccionServiciosBlock".
  */
 export interface SeccionServiciosBlock {
@@ -1016,7 +1219,7 @@ export interface Provincia {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero' | 'customHero';
     richText?: {
       root: {
         type: string;
@@ -1082,6 +1285,26 @@ export interface Provincia {
         }[]
       | null;
     media?: (number | null) | Media;
+    additionalSections?:
+      | {
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Añade un logo para mostrar en el héroe
      */
@@ -1126,8 +1349,24 @@ export interface Provincia {
 export interface Municipio {
   id: number;
   title: string;
+  layout?:
+    | (
+        | CallToActionBlock
+        | CallToActionBlockAlt
+        | ContentBlock
+        | MediaBlock
+        | ArchiveBlock
+        | FormBlock
+        | SeccionComentariosBlock
+        | SeccionServiciosBlock
+        | SeccionProvinciasBlock
+        | SeccionInformativoBlock
+        | SeccionInstruccionesBlock
+        | EmergencyBannerBlock
+      )[]
+    | null;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero' | 'customHero';
     richText?: {
       root: {
         type: string;
@@ -1193,6 +1432,26 @@ export interface Municipio {
         }[]
       | null;
     media?: (number | null) | Media;
+    additionalSections?:
+      | {
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Añade un logo para mostrar en el héroe
      */
@@ -1202,33 +1461,55 @@ export interface Municipio {
      */
     logoAlt?: (number | null) | Media;
   };
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | SeccionComentariosBlock
-    | SeccionServiciosBlock
-    | SeccionProvinciasBlock
-    | SeccionInformativoBlock
-    | SeccionInstruccionesBlock
-    | EmergencyBannerBlock
-  )[];
+  slug?: string | null;
+  slugLock?: boolean | null;
   meta?: {
     title?: string | null;
+    description?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
-    description?: string | null;
   };
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionInformativoAltBlock".
+ */
+export interface SeccionInformativoAltBlock {
+  image: number | Media;
+  iconPrimary?: (number | null) | Media;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  imagePosition?: ('Left' | 'Right' | 'Top' | 'Bottom') | null;
+  secciones?:
+    | {
+        icono: number | Media;
+        titulo: string;
+        descripcion: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seccionInformativoAlt';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1531,6 +1812,12 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        additionalSections?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+            };
         logo?: T;
         logoAlt?: T;
       };
@@ -1538,16 +1825,36 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        ctaAlt?: T | CallToActionBlockAltSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
+        archiveAlt?: T | ArchiveBlockAltSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
+        seccionComentariosAlt?: T | SeccionComentariosAltBlockSelect<T>;
         seccionServicios?: T | SeccionServiciosBlockSelect<T>;
         seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
+        seccionProvinciasAlt?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    pagina?: T;
+                    estado?: T;
+                    id?: T;
+                  };
+              titulo?: T;
+              id?: T;
+              blockName?: T;
+            };
         seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
+        seccionInformativoAlt?: T | SeccionInformativoAltBlockSelect<T>;
         seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+        seccionSecuencial?: T | SeccionSecuencialBlockSelect<T>;
         emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
+        bannerEmergenciaAlt?: T | BannerEmergenciaAltBlockSelect<T>;
       };
   meta?:
     | T
@@ -1568,6 +1875,31 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "CallToActionBlock_select".
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              contacto?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlockAlt_select".
+ */
+export interface CallToActionBlockAltSelect<T extends boolean = true> {
   richText?: T;
   links?:
     | T
@@ -1641,6 +1973,24 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlockAlt_select".
+ */
+export interface ArchiveBlockAltSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  icon?: T;
+  introContent?: T;
+  image?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FormBlock_select".
  */
 export interface FormBlockSelect<T extends boolean = true> {
@@ -1656,6 +2006,27 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface SeccionComentariosBlockSelect<T extends boolean = true> {
   title?: T;
+  comments?:
+    | T
+    | {
+        userName?: T;
+        comment?: T;
+        userIcon?: T;
+        puntuacion?: T;
+        id?: T;
+      };
+  starIcon?: T;
+  starIconEmpt?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionComentariosAltBlock_select".
+ */
+export interface SeccionComentariosAltBlockSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
   comments?:
     | T
     | {
@@ -1714,6 +2085,27 @@ export interface SeccionInformativoBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionInformativoAltBlock_select".
+ */
+export interface SeccionInformativoAltBlockSelect<T extends boolean = true> {
+  image?: T;
+  iconPrimary?: T;
+  title?: T;
+  content?: T;
+  imagePosition?: T;
+  secciones?:
+    | T
+    | {
+        icono?: T;
+        titulo?: T;
+        descripcion?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SeccionInstruccionesBlock_select".
  */
 export interface SeccionInstruccionesBlockSelect<T extends boolean = true> {
@@ -1732,12 +2124,41 @@ export interface SeccionInstruccionesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeccionSecuencialBlock_select".
+ */
+export interface SeccionSecuencialBlockSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
+  secciones?:
+    | T
+    | {
+        media?: T;
+        titulo?: T;
+        descripcion?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "EmergencyBannerBlock_select".
  */
 export interface EmergencyBannerBlockSelect<T extends boolean = true> {
   title?: T;
   contacto?: T;
   isActive?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerEmergenciaAltBlock_select".
+ */
+export interface BannerEmergenciaAltBlockSelect<T extends boolean = true> {
+  textoPrincipal?: T;
+  contacto?: T;
+  numeroDefault?: T;
   id?: T;
   blockName?: T;
 }
@@ -1776,6 +2197,12 @@ export interface ProvinciasSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        additionalSections?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+            };
         logo?: T;
         logoAlt?: T;
       };
@@ -1814,6 +2241,22 @@ export interface ProvinciasSelect<T extends boolean = true> {
  */
 export interface MunicipiosSelect<T extends boolean = true> {
   title?: T;
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        ctaAlt?: T | CallToActionBlockAltSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
+        seccionServicios?: T | SeccionServiciosBlockSelect<T>;
+        seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
+        seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
+        seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
+        emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
+      };
   hero?:
     | T
     | {
@@ -1843,34 +2286,24 @@ export interface MunicipiosSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        additionalSections?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+            };
         logo?: T;
         logoAlt?: T;
       };
-  layout?:
-    | T
-    | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        archive?: T | ArchiveBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        seccionComentarios?: T | SeccionComentariosBlockSelect<T>;
-        seccionServicios?: T | SeccionServiciosBlockSelect<T>;
-        seccionProvincias?: T | SeccionProvinciasBlockSelect<T>;
-        seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
-        seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
-        emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
-      };
+  slug?: T;
+  slugLock?: T;
   meta?:
     | T
     | {
         title?: T;
-        image?: T;
         description?: T;
+        image?: T;
       };
-  publishedAt?: T;
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1881,6 +2314,7 @@ export interface MunicipiosSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   heroImage?: T;
   icon?: T;
   content?: T;
@@ -2430,10 +2864,6 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'provincias';
           value: number | Provincia;
-        } | null)
-      | ({
-          relationTo: 'municipios';
-          value: number | Municipio;
         } | null)
       | ({
           relationTo: 'posts';

@@ -3,7 +3,9 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
+import { ArchiveBlockAlt } from '../../blocks/ArchiveBlockAlt/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { CallToActionAlt } from '../../blocks/CallToActionAlt/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -13,11 +15,16 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { SeccionComentarios } from '@/blocks/SeccionComentarios/config'
+import { SeccionComentariosAlt } from '@/blocks/SeccionCommentariosAlt/Config'
 import { SeccionServicios } from '@/blocks/SeccionBeneficios/config'
 import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
+import { SeccionProvinciasAlt } from '@/blocks/SeccionProvinciasAlt/config'
 import { SeccionInformativo } from '@/blocks/SeccionInformativo/config'
 import { SeccionInstrucciones } from '@/blocks/SeccionInstrucciones/config'
+import { SeccionSecuencial } from '@/blocks/SeccionSecuencial/config'
 import { EmergencyBanner } from '@/blocks/EmergencyBanner/config'
+import { BannerEmergenciaBlock } from '@/blocks/EmergencyBannerAlt/config'
+import { SeccionInformativoAlt } from '@/blocks/SeccionInformativoAlt/config'
 
 import {
   MetaDescriptionField,
@@ -81,7 +88,26 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, SeccionComentarios, SeccionServicios, SeccionProvincias, SeccionInformativo, SeccionInstrucciones, EmergencyBanner],
+              blocks: [
+                CallToAction, 
+                CallToActionAlt, 
+                Content, 
+                MediaBlock, 
+                Archive, 
+                ArchiveBlockAlt,
+                FormBlock, 
+                SeccionComentarios, 
+                SeccionComentariosAlt,
+                SeccionServicios, 
+                SeccionProvincias,
+                SeccionProvinciasAlt,
+                SeccionInformativo,
+                SeccionInformativoAlt,
+                SeccionInstrucciones,
+                SeccionSecuencial,
+                EmergencyBanner, 
+                BannerEmergenciaBlock
+              ],
               required: true,
               admin: {
                 initCollapsed: true,

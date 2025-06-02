@@ -22,8 +22,10 @@ import { getServerSideURL } from './utilities/getURL'
 import { SeccionInstrucciones } from './blocks/SeccionInstrucciones/config'
 import { SeccionComentarios } from './blocks/SeccionComentarios/config'
 import { SeccionInformativo } from './blocks/SeccionInformativo/config'
+import { SeccionSecuencial } from './blocks/SeccionSecuencial/config'
 import { Contactos } from './collections/Contactos'
 import { EmergencyBanner } from '@/blocks/EmergencyBanner/config'
+import { BannerEmergenciaBlock } from '@/blocks/EmergencyBannerAlt/config'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -86,7 +88,9 @@ export default buildConfig({
     SeccionInstrucciones,
     SeccionComentarios,
     SeccionInformativo,
-    EmergencyBanner
+    SeccionSecuencial,
+    EmergencyBanner,
+    BannerEmergenciaBlock
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [
