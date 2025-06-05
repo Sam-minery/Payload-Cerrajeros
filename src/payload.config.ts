@@ -26,6 +26,18 @@ import { SeccionSecuencial } from './blocks/SeccionSecuencial/config'
 import { Contactos } from './collections/Contactos'
 import { EmergencyBanner } from '@/blocks/EmergencyBanner/config'
 import { BannerEmergenciaBlock } from '@/blocks/EmergencyBannerAlt/config'
+import { Archive } from '@/blocks/ArchiveBlock/config'
+import { ArchiveBlockAlt } from '@/blocks/ArchiveBlockAlt/config'
+import { CallToAction } from '@/blocks/CallToAction/config'
+import { CallToActionAlt } from '@/blocks/CallToActionAlt/config'
+import { Content } from '@/blocks/Content/config'
+import { FormBlock } from '@/blocks/Form/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { SeccionServicios } from '@/blocks/SeccionBeneficios/config'
+import { SeccionProvincias } from '@/blocks/SeccionProvincias/config'
+import { SeccionProvinciasAlt } from '@/blocks/SeccionProvinciasAlt/config'
+import { SeccionComentariosAlt } from '@/blocks/SeccionCommentariosAlt/Config'
+import { SeccionInformativoAlt } from '@/blocks/SeccionInformativoAlt/config'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -90,7 +102,19 @@ export default buildConfig({
     SeccionInformativo,
     SeccionSecuencial,
     EmergencyBanner,
-    BannerEmergenciaBlock
+    BannerEmergenciaBlock,
+    Archive,
+    ArchiveBlockAlt,
+    CallToAction,
+    CallToActionAlt,
+    Content,
+    FormBlock,
+    MediaBlock,
+    SeccionServicios,
+    SeccionProvincias,
+    SeccionProvinciasAlt,
+    SeccionComentariosAlt,
+    SeccionInformativoAlt
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [
