@@ -1349,22 +1349,21 @@ export interface Provincia {
 export interface Municipio {
   id: number;
   title: string;
-  layout?:
-    | (
-        | CallToActionBlock
-        | CallToActionBlockAlt
-        | ContentBlock
-        | MediaBlock
-        | ArchiveBlock
-        | FormBlock
-        | SeccionComentariosBlock
-        | SeccionServiciosBlock
-        | SeccionProvinciasBlock
-        | SeccionInformativoBlock
-        | SeccionInstruccionesBlock
-        | EmergencyBannerBlock
-      )[]
-    | null;
+  layout: (
+    | CallToActionBlock
+    | CallToActionBlockAlt
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | SeccionComentariosBlock
+    | SeccionServiciosBlock
+    | SeccionProvinciasBlock
+    | SeccionInformativoBlock
+    | SeccionInstruccionesBlock
+    | EmergencyBannerBlock
+    | BannerEmergenciaAltBlock
+  )[];
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'cerrajerosHero' | 'customHero';
     richText?: {
@@ -2256,6 +2255,7 @@ export interface MunicipiosSelect<T extends boolean = true> {
         seccionInformativo?: T | SeccionInformativoBlockSelect<T>;
         seccionInstrucciones?: T | SeccionInstruccionesBlockSelect<T>;
         emergencyBanner?: T | EmergencyBannerBlockSelect<T>;
+        bannerEmergenciaAlt?: T | BannerEmergenciaAltBlockSelect<T>;
       };
   hero?:
     | T

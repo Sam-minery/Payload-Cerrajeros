@@ -43,9 +43,7 @@ export default async function Provincia({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/provincias/' + slug
 
-  let provincia: RequiredDataFromCollectionSlug<'provincias'> | null
-
-  provincia = await queryProvinciaBySlug({
+  const provincia = await queryProvinciaBySlug({
     slug,
   })
 

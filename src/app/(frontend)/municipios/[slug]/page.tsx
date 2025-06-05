@@ -43,9 +43,7 @@ export default async function Municipio({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/municipios/' + slug
 
-  let municipio: RequiredDataFromCollectionSlug<'municipios'> | null
-
-  municipio = await queryMunicipioBySlug({
+  const municipio = await queryMunicipioBySlug({
     slug,
   })
 
